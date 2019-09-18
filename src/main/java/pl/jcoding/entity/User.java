@@ -2,6 +2,7 @@ package pl.jcoding.entity;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.jcoding.util.ConverterStringCollection;
 
@@ -27,7 +28,7 @@ public class User extends CommonEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userAuthorities.stream().map(s -> (GrantedAuthority) () -> s).collect(Collectors.toList());
+        return userAuthorities.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList());
     }
 
     public void addAuthority(String... role) {
