@@ -17,18 +17,18 @@ public abstract class CommonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     @JsonIgnore
     @Enumerated(EnumType.STRING)
-    private Application application;
+    protected Application application;
 
     @JsonIgnore
     @CreatedDate
-    private LocalDateTime createdDate;
+    protected LocalDateTime createdDate;
 
     @JsonIgnore
     @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    protected LocalDateTime lastModifiedDate;
 
 }

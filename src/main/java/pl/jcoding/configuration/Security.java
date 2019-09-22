@@ -3,6 +3,7 @@ package pl.jcoding.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -48,7 +49,11 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/auth-api/authenticate").permitAll()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/item-catalogue-api/category","/item-catalogue-api/category/*","/item-catalogue-api/category/children/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/item/*").permitAll()
+                .antMatchers("/auth-api/authenticate").permitAll()
+                .antMatchers("/item-catalogue-api/gallery-photo/item-photo/*/*").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))

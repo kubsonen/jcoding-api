@@ -2,26 +2,28 @@ package pl.jcoding.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.math.BigDecimal;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @Entity
 public class Item extends CommonEntity {
 
+    @NotBlank
+    @Size(min = 10, max = 100)
     private String itemName;
 
+    @NotBlank
+    @Size(max = 5000)
     private String description;
 
-    private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private ItemCategory category;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gallery_id")
     private ItemGallery gallery;
 
