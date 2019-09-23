@@ -37,6 +37,7 @@ public class ItemCatalogue {
     @Autowired
     private ConverterStringToItemGallery converterStringToItemGallery;
 
+    //PUBLIC ACTIONS
     @GetMapping
     public String getStarted() {
         return "My item catalogue API";
@@ -57,6 +58,19 @@ public class ItemCatalogue {
         return itemService.getCategoryChildren(parentId);
     }
 
+    @GetMapping("/item/{category-id}")
+    public ItemsResponse getItemsPage(@PathVariable("category-id") Long categoryId,
+                                      @RequestParam(value = "query", required = false) String query, //Search field
+                                      @PageableDefault(size = 1) Pageable pageable) throws Exception {
+        return itemService.getItemResponse(categoryId, query, pageable);
+    }
+
+    @GetMapping(value = "/gallery-photo/item-photo/{gallery-identity}/{photo-identity}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getGalleryPhoto(@PathVariable("gallery-identity") UUID galleryIdentity, @PathVariable("photo-identity") UUID photoIdentity) throws Exception {
+        return galleryUtil.getPhotoBytesFromGallery(galleryIdentity, photoIdentity);
+    }
+
+    //ADMIN ACTION
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/category")
     public ItemCategory saveCategory(@Valid @RequestBody ItemCategory itemCategory) {
@@ -69,19 +83,14 @@ public class ItemCatalogue {
         itemService.deleteCategory(itemCategory);
     }
 
-    @GetMapping("/item/{category-id}")
-    public ItemsResponse getItemsPage(@PathVariable("category-id") Long categoryId,
-                                      @RequestParam(value = "query", required = false) String query, //Search field
-                                      @PageableDefault(size = 1) Pageable pageable) throws Exception {
-        return itemService.getItemResponse(categoryId, query, pageable);
-    }
-
     @PostMapping("/item")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Item saveItem(@Valid @RequestBody Item item) throws Exception {
         return itemService.saveItem(item);
     }
 
     @PostMapping("/item/gallery")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ItemGallery createItemGallery() throws Exception {
         ItemGallery itemGallery = new ItemGallery();
         itemGallery.setGalleryFileName(galleryUtil.getTempFile());
@@ -89,6 +98,7 @@ public class ItemCatalogue {
     }
 
     @PostMapping(value = "/item/gallery/add-photo", consumes = {"multipart/form-data"})
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ItemGallery addPhotoToGallery(@RequestPart("gallery") String itemGalleryJSON, @RequestPart("file") MultipartFile file) throws Exception {
         ItemGallery itemGallery = converterStringToItemGallery.convert(itemGalleryJSON);
         if (itemGallery.getGalleryFileName() == null) throw new Exception("Not found gallery identity");
@@ -96,11 +106,6 @@ public class ItemCatalogue {
         if (!contentType.equals("image/jpeg")) throw new Exception("Content type is not valid");
         itemService.addPhoto(itemGallery, file.getOriginalFilename(), galleryUtil.saveMultipartToTemp(file));
         return itemGallery;
-    }
-
-    @GetMapping(value = "/gallery-photo/item-photo/{gallery-identity}/{photo-identity}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getGalleryPhoto(@PathVariable("gallery-identity") UUID galleryIdentity, @PathVariable("photo-identity") UUID photoIdentity) throws Exception {
-        return galleryUtil.getPhotoBytesFromGallery(galleryIdentity, photoIdentity);
     }
 
 }

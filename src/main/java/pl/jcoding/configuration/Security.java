@@ -51,7 +51,7 @@ public class Security extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/item-catalogue-api/category","/item-catalogue-api/category/*","/item-catalogue-api/category/children/*").permitAll()
-                .antMatchers(HttpMethod.GET, "/item/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/item-catalogue-api/item/*").permitAll()
                 .antMatchers("/auth-api/authenticate").permitAll()
                 .antMatchers("/item-catalogue-api/gallery-photo/item-photo/*/*").permitAll()
                 .anyRequest().authenticated()
