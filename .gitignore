@@ -33,6 +33,8 @@ build/
 ### Custom ###
 .mvn
 jcoding-dbo
+gallery-files
+gallery-files-temp
 derby.log
 mvnw
 mvnw.cmd

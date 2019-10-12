@@ -2,6 +2,7 @@ package pl.jcoding.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class ItemCategory extends CommonEntity {
 
     @NotBlank
