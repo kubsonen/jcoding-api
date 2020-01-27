@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TokenResponse {
-    private String token;
+public class MotoFotoImage {
+    private String base64;
 }

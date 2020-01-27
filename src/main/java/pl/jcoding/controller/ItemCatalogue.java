@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.jcoding.entity.Item;
 import pl.jcoding.entity.ItemCategory;
 import pl.jcoding.entity.ItemGallery;
-import pl.jcoding.model.ItemsResponse;
+import pl.jcoding.model.ItemItemsResponse;
 import pl.jcoding.service.ItemService;
 import pl.jcoding.util.ConverterStringToItemGallery;
 import pl.jcoding.util.GalleryUtil;
@@ -44,24 +44,25 @@ public class ItemCatalogue {
     }
 
     @GetMapping("/category")
-    public List<ItemCategory> getStartedCategories() {
-        return itemService.getStartCategories();
+    public List<ItemCategory> getCategories(@RequestParam(value = "category-parent-id", required = false) String categoryParentId) {
+        if (categoryParentId == null || categoryParentId.isEmpty()) return itemService.getStartCategories();
+        return itemService.getCategoryChildren(Long.valueOf(categoryParentId));
     }
 
-    @GetMapping("/category/{category-name}")
-    public ItemCategory getCategory(@PathVariable("category-name") String categoryName) {
-        return itemService.getCategoryByName(categoryName);
+    @GetMapping("/category/path/{parent-id}")
+    public List<ItemCategory> getParentPath(@PathVariable("parent-id") Long parentId) {
+        return itemService.getParentPath(parentId);
     }
 
-    @GetMapping("/category/children/{category-parent-id}")
-    public List<ItemCategory> getCategoryChildren(@PathVariable("category-parent-id") Long parentId) {
-        return itemService.getCategoryChildren(parentId);
+    @GetMapping("/category/{category-id}")
+    public ItemCategory getCategory(@PathVariable("category-id") Long categoryId) {
+        return itemService.getCategoryById(categoryId);
     }
 
     @GetMapping("/item/{category-id}")
-    public ItemsResponse getItemsPage(@PathVariable("category-id") Long categoryId,
-                                      @RequestParam(value = "query", required = false) String query, //Search field
-                                      @PageableDefault(size = 1) Pageable pageable) throws Exception {
+    public ItemItemsResponse getItemsPage(@PathVariable("category-id") Long categoryId,
+                                          @RequestParam(value = "query", required = false) String query, //Search field
+                                          @PageableDefault(size = 1) Pageable pageable) throws Exception {
         return itemService.getItemResponse(categoryId, query, pageable);
     }
 
@@ -78,9 +79,9 @@ public class ItemCatalogue {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/category")
-    public void deleteCategory(@RequestBody ItemCategory itemCategory) {
-        itemService.deleteCategory(itemCategory);
+    @DeleteMapping("/category/{category-id}")
+    public void deleteCategory(@PathVariable("category-id") Long categoryId) {
+        itemService.deleteCategory(categoryId);
     }
 
     @PostMapping("/item")

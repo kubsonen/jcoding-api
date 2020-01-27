@@ -1,5 +1,5 @@
 package pl.jcoding.model;
 
-public enum Application {
+public enum ApiApplication {
     ITEM_CATALOGUE
 }

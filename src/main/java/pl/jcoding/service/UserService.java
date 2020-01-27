@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        this.createUserIfNotExists();
+//        this.createUserIfNotExists();
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 

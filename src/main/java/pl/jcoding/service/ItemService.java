@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.jcoding.entity.Item;
 import pl.jcoding.entity.ItemCategory;
 import pl.jcoding.entity.ItemGallery;
-import pl.jcoding.model.ItemsResponse;
+import pl.jcoding.model.ItemItemsResponse;
 import pl.jcoding.repository.ItemCategoryRepository;
 import pl.jcoding.repository.ItemGalleryRepository;
 import pl.jcoding.repository.ItemRepository;
@@ -38,6 +38,10 @@ public class ItemService {
         return itemCategoryRepository.findByCategoryName(categoryName);
     }
 
+    public ItemCategory getCategoryById(Long id) {
+        return itemCategoryRepository.findById(id).orElse(null);
+    }
+
     @Transactional(rollbackOn = Throwable.class)
     public ItemCategory saveCategory(ItemCategory itemCategory) {
 
@@ -63,10 +67,9 @@ public class ItemService {
         return itemCategoryRepository.save(itemCategory);
     }
 
-    public void deleteCategory(ItemCategory itemCategory) {
-        if (itemCategory != null)
-            Optional.ofNullable(itemCategory.getId())
-                    .ifPresent(id -> this.itemCategoryRepository.deleteById(id));
+    public void deleteCategory(Long itemId) {
+        if (itemId != null)
+            this.itemCategoryRepository.deleteById(itemId);
     }
 
     @Transactional(rollbackOn = Throwable.class)
@@ -168,7 +171,7 @@ public class ItemService {
         return itemCategoryRepository.findAllByParentIsNull();
     }
 
-    public ItemsResponse getItemResponse(Long categoryId, String query, Pageable pageable) throws Exception {
+    public ItemItemsResponse getItemResponse(Long categoryId, String query, Pageable pageable) throws Exception {
 
         ItemCategory itemCategory = itemCategoryRepository.findById(categoryId).orElseThrow(() -> new Exception("Category not found"));
 
@@ -179,7 +182,7 @@ public class ItemService {
             items = itemRepository.findItems(itemCategory, pageable);
         }
 
-        ItemsResponse itemsResponse = new ItemsResponse();
+        ItemItemsResponse itemsResponse = new ItemItemsResponse();
         itemsResponse.setResponseDate(LocalDateTime.now());
         itemsResponse.setItems(items.getContent());
         itemsResponse.setCategory(itemCategory);
@@ -192,6 +195,23 @@ public class ItemService {
     @Transactional
     public List<ItemCategory> getCategoryChildren(Long parentId) {
         return itemCategoryRepository.getNameAndDescriptionByParentId(parentId);
+    }
+
+    @Transactional
+    public List<ItemCategory> getParentPath(Long parentId) {
+        List<ItemCategory> itemCategories = new ArrayList<>();
+
+        itemCategoryRepository.findById(parentId).ifPresent(ic -> {
+            itemCategories.add(0, ic);
+            ItemCategory parent = ic.getParent();
+
+            while (parent != null) {
+                itemCategories.add(0, parent);
+                parent = parent.getParent();
+            }
+        });
+
+        return itemCategories;
     }
 
 }

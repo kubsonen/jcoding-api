@@ -3,7 +3,7 @@ package pl.jcoding.model;
 import lombok.Data;
 
 @Data
-public class TokenRequest {
+public class ApiTokenRequest {
     private String username;
     private String password;
 }

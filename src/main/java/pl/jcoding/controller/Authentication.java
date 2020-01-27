@@ -5,8 +5,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import pl.jcoding.entity.User;
-import pl.jcoding.model.TokenRequest;
-import pl.jcoding.model.TokenResponse;
+import pl.jcoding.model.ApiTokenRequest;
+import pl.jcoding.model.ApiTokenResponse;
 import pl.jcoding.service.UserService;
 import pl.jcoding.util.TokenUtil;
 
@@ -25,11 +25,11 @@ public class Authentication {
 
     @CrossOrigin("*")
     @PostMapping("/authenticate")
-    public TokenResponse authenticate(@RequestBody TokenRequest tokenRequest) {
+    public ApiTokenResponse authenticate(@RequestBody ApiTokenRequest tokenRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(tokenRequest.getUsername(), tokenRequest.getPassword()));
             User user = userService.loadUserByUsername(tokenRequest.getUsername());
-            return new TokenResponse(tokenUtil.generateToken(user));
+            return new ApiTokenResponse(tokenUtil.generateToken(user));
         } catch (Throwable t) {
             t.printStackTrace();
             throw t;

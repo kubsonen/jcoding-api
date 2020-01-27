@@ -1,7 +1,7 @@
 package pl.jcoding;
 
 import org.junit.Test;
-import pl.jcoding.util.JcodingCommons;
+import pl.jcoding.util.Commons;
 
 public class JCodingUtilsTests {
 
@@ -14,10 +14,10 @@ public class JCodingUtilsTests {
     @Test
     public void testFillSpacesStringUtils(){
 
-        System.out.println(">" + JcodingCommons.fillSpaces(a, length) + "<");
-        System.out.println(">" + JcodingCommons.fillSpaces(b, length) + "<");
-        System.out.println(">" + JcodingCommons.fillSpaces(c, length) + "<");
-        System.out.println(">" + JcodingCommons.fillSpaces(d, length) + "<");
+        System.out.println(">" + Commons.fillSpaces(a, length) + "<");
+        System.out.println(">" + Commons.fillSpaces(b, length) + "<");
+        System.out.println(">" + Commons.fillSpaces(c, length) + "<");
+        System.out.println(">" + Commons.fillSpaces(d, length) + "<");
 
     }
 

@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import pl.jcoding.model.Application;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,12 +15,12 @@ import java.time.LocalDateTime;
 public abstract class CommonEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @JsonIgnore
-    @Enumerated(EnumType.STRING)
-    protected Application application;
+//    @JsonIgnore
+//    @Enumerated(EnumType.STRING)
+//    protected ApiApplication apiApplication;
 
     @JsonIgnore
     @CreatedDate

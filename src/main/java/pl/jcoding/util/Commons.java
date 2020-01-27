@@ -1,6 +1,6 @@
 package pl.jcoding.util;
 
-public class JcodingCommons {
+public class Commons {
 
     private static final String SPACE = " ";
 
@@ -27,6 +27,11 @@ public class JcodingCommons {
             }
 
         }
+    }
+
+    public static final boolean isValid(String s) {
+        if (s == null || s.trim().isEmpty()) return false;
+        return true;
     }
 
 }

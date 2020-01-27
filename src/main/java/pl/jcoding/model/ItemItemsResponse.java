@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class ItemsResponse {
+public class ItemItemsResponse {
 
     private LocalDateTime responseDate;
 

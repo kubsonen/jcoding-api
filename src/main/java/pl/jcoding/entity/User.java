@@ -16,12 +16,14 @@ import java.util.stream.Collectors;
 @Data
 @Entity
 @Table(name = "api_user")
-public class User extends CommonEntity implements UserDetails {
+public class User extends Person implements UserDetails {
 
     @Column(unique = true)
     private String username;
 
     private String password;
+
+    private String email;
 
     @Convert(converter = ConverterStringCollection.class)
     private List<String> userAuthorities;

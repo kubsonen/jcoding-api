@@ -144,8 +144,8 @@ public class GalleryUtil {
 
         StringBuilder sb = new StringBuilder();
         sb
-                .append(JcodingCommons.fillSpaces(galleryPhotoIdentityText, IDENTITY_LENGTH))
-                .append(JcodingCommons.fillSpaces(fileOriginalName, FILE_NAME_LENGTH))
+                .append(Commons.fillSpaces(galleryPhotoIdentityText, IDENTITY_LENGTH))
+                .append(Commons.fillSpaces(fileOriginalName, FILE_NAME_LENGTH))
                 .append(Base64.getEncoder().encodeToString(tempFileBytes))
                 .append("\n");
 

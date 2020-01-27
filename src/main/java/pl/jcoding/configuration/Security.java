@@ -50,7 +50,10 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/item-catalogue-api/category","/item-catalogue-api/category/*","/item-catalogue-api/category/children/*").permitAll()
+                .antMatchers( "/moto-foto-api/login").permitAll()
+                .antMatchers( "/moto-foto-api/register").permitAll()
+                .antMatchers( "/moto-foto-api/test").permitAll()
+                .antMatchers(HttpMethod.GET, "/item-catalogue-api/category", "/item-catalogue-api/category/path/*", "item-catalogue-api/category/*","/item-catalogue-api/category/children/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/item-catalogue-api/item/*").permitAll()
                 .antMatchers("/auth-api/authenticate").permitAll()
                 .antMatchers("/item-catalogue-api/gallery-photo/item-photo/*/*").permitAll()
@@ -62,32 +65,4 @@ public class Security extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -35,6 +35,8 @@ build/
 jcoding-dbo
 gallery-files
 gallery-files-temp
+jcoding-config
+moto-foto-image
 derby.log
 mvnw
 mvnw.cmd
