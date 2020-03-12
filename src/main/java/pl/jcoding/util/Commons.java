@@ -4,7 +4,7 @@ public class Commons {
 
     private static final String SPACE = " ";
 
-    public static final String fillSpaces(String text, int length) {
+    public static String fillSpaces(String text, int length) {
 
         if (text == null) {
             StringBuilder sb = new StringBuilder();

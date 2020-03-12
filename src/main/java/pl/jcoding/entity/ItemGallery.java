@@ -1,7 +1,8 @@
 package pl.jcoding.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import pl.jcoding.util.ConverterUUIDCollection;
 
 import javax.persistence.Convert;
@@ -10,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class ItemGallery extends CommonEntity {
 

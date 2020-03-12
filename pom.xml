@@ -10,50 +10,28 @@
     </parent>
     <groupId>pl.jcoding</groupId>
     <artifactId>jcoding-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>jcoding-api</name>
     <description>JCoding Website API</description>
     <packaging>jar</packaging>
 
-    <profiles>
-        <profile>
-            <id>test-derby-dbo</id>
-            <properties>
-                <jcoding-api-prop-file>jcoding-config/app-derby.properties</jcoding-api-prop-file>
-            </properties>
-        </profile>
-        <profile>
-            <id>test-production-dbo</id>
-            <properties>
-                <jcoding-api-prop-file>jcoding-config/app.properties</jcoding-api-prop-file>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>6.0.6</version>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>production</id>
-            <properties>
-                <jcoding-api-prop-file>/srv/jcoding-api/app-production.properties</jcoding-api-prop-file>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                    <version>6.0.6</version>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
-
     <properties>
         <jcoding-api-prop-file>/</jcoding-api-prop-file>
         <java.version>1.8</java.version>
+        <apache.commons.version>3.9</apache.commons.version>
+        <commons.io.version>2.6</commons.io.version>
+        <html.unit.version>2.37.0</html.unit.version>
+        <mysql.driver.version>6.0.6</mysql.driver.version>
+        <jwt.version>0.9.1</jwt.version>
+        <jj.utilities.version>2d64e4aa2d</jj.utilities.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -72,12 +50,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -86,41 +69,44 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.9</version>
+            <version>${apache.commons.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jwt.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>${commons.io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>${html.unit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.driver.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kubsonen</groupId>
+            <artifactId>jj-utilities</artifactId>
+            <version>${jj.utilities.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable> <!-- execute as a service in ubuntu -->
-                    <systemPropertyVariables>
-                        <jcoding-api-prop-file>${jcoding-api-prop-file}</jcoding-api-prop-file>
-                    </systemPropertyVariables>
+                    <executable>true</executable>
                 </configuration>
             </plugin>
         </plugins>

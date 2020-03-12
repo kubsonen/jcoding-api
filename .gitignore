@@ -40,3 +40,5 @@ moto-foto-image
 derby.log
 mvnw
 mvnw.cmd
+/src/main/resources/app.properties
+/src/main/resources/app-production.properties

@@ -1,8 +1,10 @@
 package pl.jcoding.util;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ApiException extends Throwable {
 
     private ApiExceptionCode code;
