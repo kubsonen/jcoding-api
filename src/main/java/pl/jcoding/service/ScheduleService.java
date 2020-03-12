@@ -12,8 +12,8 @@ public class ScheduleService {
         this.as = auctionService;
     }
 
-    //    @Scheduled(fixedDelay = 300000) //5 minutes
-    @Scheduled(fixedDelay = 1000) //1 second
+        @Scheduled(fixedDelay = 3000000) //5 minutes
+//    @Scheduled(fixedDelay = 1000) //1 second
     public void refreshAuctions() {
         as.addAuctionsLocally(as.auctionsToAdd(as.getActionPositions()));
     }

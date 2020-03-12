@@ -57,6 +57,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/item-catalogue-api/item/*").permitAll()
                 .antMatchers("/auth-api/authenticate").permitAll()
                 .antMatchers("/item-catalogue-api/gallery-photo/item-photo/*/*").permitAll()
+                .antMatchers("/car-pair/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
