@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -16,4 +17,5 @@ public class CarPair {
     private UUID id;
     private String brand;
     private String model;
+    private LocalDateTime lastUpdate;
 }
