@@ -21,7 +21,7 @@
         <apache.commons.version>3.9</apache.commons.version>
         <commons.io.version>2.6</commons.io.version>
         <html.unit.version>2.37.0</html.unit.version>
-        <mysql.driver.version>6.0.6</mysql.driver.version>
+        <mysql.driver.version>8.0.16</mysql.driver.version>
         <jwt.version>0.9.1</jwt.version>
         <jj.utilities.version>2d64e4aa2d</jj.utilities.version>
     </properties>
